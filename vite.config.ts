@@ -9,6 +9,9 @@ import ViteComponents from "vite-plugin-components";
 
 // plugins settings
 export default defineConfig({
+  build: {
+    outDir: '../dist'
+  },
   plugins: [
     ViteVue({
       include: [/\.vue$/, /\.md$/],
