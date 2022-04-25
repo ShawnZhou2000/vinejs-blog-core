@@ -6,11 +6,16 @@ import { defineConfig } from "vite";
 import ViteVue from "@vitejs/plugin-vue";
 import ViteMarkdown from "vite-plugin-md";
 import ViteComponents from "vite-plugin-components";
-
+import { useRouteStore } from './src/store/useRouteStore';
 // plugins settings
 export default defineConfig({
   build: {
-    outDir: '../dist'
+    outDir: "../dist",
+  },
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
+    },
   },
   plugins: [
     ViteVue({
@@ -18,14 +23,16 @@ export default defineConfig({
     }),
     VitePages({
       extensions: ["vue", "md"],
-      pagesDir: "src/pages",
+      pagesDir: "posts",
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1));
-        if (!path.includes('projects.md') && path.includes('.md')) {
-          const md = fs.readFileSync(path, 'utf-8');
+        if (path.includes(".md")) {
+          const md = fs.readFileSync(path, "utf-8");
           const { data } = matter(md);
           route.meta = Object.assign(route.meta || {}, { frontmatter: data });
-      }
+        }
+        const store = useRouteStore();
+        store.setRouteTable(route);
         return route;
       },
     }),
@@ -34,5 +41,5 @@ export default defineConfig({
       extensions: ["vue", "md"],
       customLoaderMatcher: (path) => path.endsWith(".md"),
     }),
-  ]
+  ],
 });
