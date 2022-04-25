@@ -11,5 +11,10 @@ export const createApp = ViteSSG(
     const pinia = createPinia();
     app.use(pinia);
     pinia.state.value = initialState.pinia || {};
+    router.beforeEach((to, from, next) => {
+      const store = useRouteStore(pinia);
+      store.initialize();
+      next();
+    })
   }
 );

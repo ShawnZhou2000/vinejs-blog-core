@@ -25,6 +25,16 @@ export const useRouteStore = defineStore('route', {
   actions: {
     setRouteTable(routeTable: routeTableObject) {
       this.routeTable = routeTable;
+    },
+    initialize() {
+      this.routeTable = {
+        name: '',
+        path: '',
+        component: '',
+        customBlock: undefined,
+        props: true,
+        meta: {}
+      }
     }
   },
   getters: {
