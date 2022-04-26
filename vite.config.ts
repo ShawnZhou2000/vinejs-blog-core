@@ -6,21 +6,6 @@ import { defineConfig } from "vite";
 import ViteVue from "@vitejs/plugin-vue";
 import ViteMarkdown from "vite-plugin-md";
 import ViteComponents from "vite-plugin-components";
-import { useRouteStore } from './src/store/useRouteStore';
-
-type routeTableObject = {
-  name: string,
-  path: string,
-  component: string,
-  customBlock: any,
-  props: boolean,
-  meta: object
-}
-
-function setRouteTable(route: routeTableObject):void {
-  const store = useRouteStore();
-  store.setRouteTable(route);
-}
 
 // plugins settings
 export default defineConfig({
@@ -46,7 +31,6 @@ export default defineConfig({
           const { data } = matter(md);
           route.meta = Object.assign(route.meta || {}, { frontmatter: data });
         }
-        setRouteTable(route);
         return route;
       },
     }),
