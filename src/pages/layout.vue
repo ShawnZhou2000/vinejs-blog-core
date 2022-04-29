@@ -38,15 +38,15 @@ export default defineComponent({
   }
 
   .blog-core__side {
-    flex-basis: calc(100% / 3 - 1rem);
+    flex-basis: calc(100% / 3 - 5.5rem);
     height: 100vh;
-    border: 1px solid red;
+    border-right: 1px solid #e2e2e2;
   }
 
   .blog-core__main {
-    flex-basis: calc(100% / 3 * 2 - 1rem);
+    flex: 1;
     overflow-y: auto;
-    border: 1px solid green;
+    // border: 1px solid green;
   }
 
 </style>
