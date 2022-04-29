@@ -17,6 +17,11 @@ export default defineConfig({
       "@": resolve(__dirname, "src"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: { }
+   },
+  }, 
   plugins: [
     ViteVue({
       include: [/\.vue$/, /\.md$/],

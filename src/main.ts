@@ -1,20 +1,18 @@
 import App from './App.vue';
 import routes from 'pages-generated';
 import { ViteSSG } from 'vite-ssg';
-import { createPinia } from 'pinia';
-import { useRouteStore } from './store/useRouteStore';
+import { createRouter, createWebHistory } from "vue-router";
 
 export const createApp = ViteSSG(
   App, 
   { routes },
   ({ app, router, initialState }) => {
-    const pinia = createPinia();
-    app.use(pinia);
-    pinia.state.value = initialState.pinia || {};
-    router.beforeEach((to, from, next) => {
-      const store = useRouteStore(pinia);
-      store.initialize();
-      next();
-    })
+    // app.use(
+    //   createRouter({
+    //     history: createWebHistory(),
+    //     routes,
+    //   })
+    // );
+    // console.log(routes);
   }
 );

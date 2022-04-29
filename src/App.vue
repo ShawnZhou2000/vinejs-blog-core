@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow: hidden">
     <router-view />
   </div>
 </template>
@@ -10,5 +10,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>

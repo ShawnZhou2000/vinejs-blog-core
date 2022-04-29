@@ -1,14 +1,19 @@
 <template>
-  <layout></layout>
+  <div>
+    <div class="blog-core__side-box">
+      
+    </div>
+    <footer-vue></footer-vue>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import layout from '../src/pages/layout.vue';
+import footerVue from '../components/footer.vue';
 
 export default defineComponent({
   components: {
-    layout
+    footerVue
   },
   setup() {
     
