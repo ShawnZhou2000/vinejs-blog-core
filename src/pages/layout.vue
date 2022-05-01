@@ -6,13 +6,14 @@
     <div class="blog-core__main">
       <navbar-vue></navbar-vue>
       <banner-vue></banner-vue>
+
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import bannerVue from '../components/banner.vue'
+import { defineComponent } from 'vue';
+import bannerVue from '../components/banner.vue';
 import sidebarVue from '../components/sidebar.vue';
 import navbarVue from '../components/navbar.vue';
 
@@ -38,7 +39,7 @@ export default defineComponent({
   }
 
   .blog-core__side {
-    flex-basis: calc(100% / 3 - 5.5rem);
+    flex-basis: calc(100% / 4 - 5rem);
     height: 100vh;
     border-right: 1px solid #e2e2e2;
   }
