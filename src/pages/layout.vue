@@ -48,7 +48,7 @@ export default defineComponent({
   .blog-core__main {
     flex: 1;
     overflow-y: auto;
-    // border: 1px solid green;
+    width: inherit;
   }
 
 </style>

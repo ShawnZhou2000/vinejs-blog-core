@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, Ref, ref } from 'vue'
 
 type NavItem = {
   name: string,
@@ -33,7 +33,7 @@ export default defineComponent({
         id: 1,
       },
     ];
-    let activePage: number = 0;
+    let activePage: Ref<number> = ref(0);
 
     return {
       navList,
@@ -48,7 +48,9 @@ export default defineComponent({
   .blog-core__navbar {
     height: 60px;
     padding: 0 30px;
-    position: absolute;
+    position: fixed;
+    width: inherit;
+    background-color: rgba(0, 0, 0, 0.6);
     ul {
       list-style: none;
       display: flex;
