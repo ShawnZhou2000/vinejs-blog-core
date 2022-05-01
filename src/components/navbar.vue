@@ -1,6 +1,9 @@
 <template>
   <div class="blog-core__navbar">
     <ul>
+      <li class="blog-core__mob-toggle" @click="showSideBar">
+        <div class="blog-core__mob-toggle-btn"></div>
+      </li>
       <li v-for="navItem in navList" :key="navItem.id">
         <router-link :to="navItem.nav" :class="{ active: activePage===navItem.id }" class="blog-core__list-item">
           {{ navItem.name }}
@@ -20,7 +23,7 @@ type NavItem = {
 }
 
 export default defineComponent({
-  setup() {
+  setup(props, ctx) {
     let navList: Array<NavItem> = [
       {
         name: '首页',
@@ -34,10 +37,18 @@ export default defineComponent({
       },
     ];
     let activePage: Ref<number> = ref(0);
+    let isSideBarActiveInMob: Ref<boolean> = ref(false);
+
+    const showSideBar = ():void => {
+      isSideBarActiveInMob = ref(!isSideBarActiveInMob);
+      ctx.emit('sideBarChangeInMob', isSideBarActiveInMob);
+    }
 
     return {
       navList,
-      activePage
+      activePage,
+      showSideBar,
+      isSideBarActiveInMob
     }
   },
 })
@@ -81,6 +92,43 @@ export default defineComponent({
     padding-bottom: 18px;
     &.active {
       border-bottom: 3px solid #4786d6;
+    }
+  }
+
+  .blog-core__mob-toggle {
+    display: none;
+    .blog-core__mob-toggle-btn {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.25);
+      width: 40px;
+      height: 40px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      transition: all 0.1s ease;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+      }
+      &::after {
+        content: ' ';
+        background: url('../../public/menu.svg');
+        width: 16px;
+        height: 16px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1440px) {
+    .blog-core__mob-toggle {
+      display: flex;
     }
   }
 </style>

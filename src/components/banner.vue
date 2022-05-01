@@ -3,9 +3,24 @@
     <div class="blog-core__motto">
       人生如逆旅，我亦是行人
     </div>
-    <i class="blog-core__arrow-down"></i>
+    <i class="blog-core__arrow-down" :class="{ active: !isArrowActive }"></i>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, watch, ref, Ref } from 'vue'
+
+export default defineComponent({
+  props: ['hideArrow'],
+  setup(props, ctx) {
+    let isArrowActive: Ref<boolean> = ref(props.hideArrow);
+    return {
+      isArrowActive
+    }
+  },
+})
+</script>
+
 
 <style scoped lang="scss">
 
@@ -42,11 +57,16 @@
     background-size: contain;
     position: absolute;
     bottom: 10rem;
+    transition: all 0.1s ease;
     animation-name: arrow;
     animation-iteration-count: infinite;
     animation-duration: 0.5s;
     animation-direction: alternate;
     animation-timing-function: linear;
+    display: none;
+    &.active {
+      display: inline-block;
+    }
     &::after {
       content: 'more';
       color: #f5f5f5;
