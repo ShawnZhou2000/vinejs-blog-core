@@ -5,7 +5,7 @@ import matter from "gray-matter";
 import { defineConfig } from "vite";
 import ViteVue from "@vitejs/plugin-vue";
 import ViteMarkdown from "vite-plugin-md";
-import ViteComponents from "vite-plugin-components";
+import Components from 'unplugin-vue-components/vite'
 
 // plugins settings
 export default defineConfig({
@@ -42,9 +42,9 @@ export default defineConfig({
       },
     }),
     ViteMarkdown(),
-    ViteComponents({
+    Components({
       extensions: ["vue", "md"],
-      customLoaderMatcher: (path) => path.endsWith(".md"),
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
     }),
   ],
 });
