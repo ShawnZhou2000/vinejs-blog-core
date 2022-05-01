@@ -8,6 +8,15 @@
 </template>
 
 <style scoped lang="scss">
+
+  @keyframes arrow {
+    0% {
+      bottom: calc(10rem + 5px);
+    }
+    100% {
+      bottom: calc(10rem - 5px);
+    }
+  }
   .blog-core__bg {
     background: url('../../public/horizon_banner.jpg');
     height: 100vh;
@@ -33,6 +42,11 @@
     background-size: contain;
     position: absolute;
     bottom: 10rem;
+    animation-name: arrow;
+    animation-iteration-count: infinite;
+    animation-duration: 0.5s;
+    animation-direction: alternate;
+    animation-timing-function: linear;
     &::after {
       content: 'more';
       color: #f5f5f5;
