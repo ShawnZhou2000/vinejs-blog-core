@@ -78,9 +78,9 @@ export default defineComponent({
   }
 
   .blog-core__list-item {
-    padding-bottom: 20px;
+    padding-bottom: 18px;
     &.active {
-      border-bottom: 2px solid #4786d6;
+      border-bottom: 3px solid #4786d6;
     }
   }
 </style>
