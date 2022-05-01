@@ -6,7 +6,7 @@
     <div class="blog-core__main">
       <navbar-vue></navbar-vue>
       <banner-vue></banner-vue>
-
+      <bloglist-vue></bloglist-vue>
     </div>
   </div>
 </template>
@@ -16,13 +16,14 @@ import { defineComponent } from 'vue';
 import bannerVue from '../components/banner.vue';
 import sidebarVue from '../components/sidebar.vue';
 import navbarVue from '../components/navbar.vue';
-
+import bloglistVue from '../components/bloglist.vue';
 
 export default defineComponent({
   components: {
     bannerVue,
     sidebarVue,
     navbarVue,
+    bloglistVue
   },
   setup() {
     
@@ -39,9 +40,9 @@ export default defineComponent({
   }
 
   .blog-core__side {
-    flex-basis: calc(100% / 4 - 5rem);
+    flex-basis: $sidebar-width;
     height: 100vh;
-    border-right: 1px solid #e2e2e2;
+    border-right: 1px solid $border-color;
   }
 
   .blog-core__main {

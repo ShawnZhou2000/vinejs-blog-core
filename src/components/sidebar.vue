@@ -2,7 +2,7 @@
   <div class="blog-core__side-container">
     <div class="blog-core__side-main">
       <div class="blog-core__center">
-        <img src="../assets/logo.png" alt="avatar"/>
+        <img src="../../public/favicon.png" alt="avatar"/>
         <h1>My Blog</h1>
         <p>A simple Vine.js blog</p>
         <div class="blog-core__iconlist"></div>
@@ -33,6 +33,8 @@ export default defineComponent({
     flex-wrap: nowrap;
     height: 100%;
     color: #464646;
+    position: fixed;
+    width: $sidebar-width;
     .blog-core__side-main {
       flex: 1;
       display: flex;

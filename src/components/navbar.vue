@@ -65,11 +65,11 @@ export default defineComponent({
         padding-right: 20px;
         a {
           text-decoration: none;
-          color: #f5f5f5;
+          color: $text-white;
           transition: all 0.1s ease;
         }
         a:hover {
-          color: #4786d6;
+          color: $text-highlight;
         }
       }
     }
