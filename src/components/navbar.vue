@@ -60,7 +60,7 @@ export default defineComponent({
     height: 60px;
     padding: 0 30px;
     position: fixed;
-    width: inherit;
+    width: 75%;
     background-color: rgba(0, 0, 0, 0.6);
     ul {
       list-style: none;

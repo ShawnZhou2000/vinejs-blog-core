@@ -1,7 +1,7 @@
 <template>
   <div class="blog-core__bg">
     <div class="blog-core__motto">
-      人生如逆旅，我亦是行人 {{ isArrowActive }}
+      人生如逆旅，我亦是行人
     </div>
     <i class="blog-core__arrow-down" id="arrow"></i>
   </div>
