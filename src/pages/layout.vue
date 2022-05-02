@@ -5,7 +5,7 @@
     </div>
     <div class="blog-core__main" ref="main">
       <navbar-vue @sideBarChangeInMob="handleSideBarChangeInMob"></navbar-vue>
-      <banner-vue :hideArrow="hideArrow"></banner-vue>
+      <banner-vue></banner-vue>
       <bloglist-vue></bloglist-vue>
     </div>
   </div>
@@ -17,19 +17,6 @@ import bannerVue from '../components/banner.vue';
 import sidebarVue from '../components/sidebar.vue';
 import navbarVue from '../components/navbar.vue';
 import bloglistVue from '../components/bloglist.vue';
-
-function throttle(fn: Function, delay: number) {
-  let timer: number | null = null;
-  return function() {
-    const args = arguments;
-    if (!timer) {
-      fn.apply(this, args);
-      timer = setTimeout(() => {
-        timer = null;
-      }, delay);
-    }
-  }
-}
 
 export default defineComponent({
   components: {
@@ -43,24 +30,10 @@ export default defineComponent({
     const handleSideBarChangeInMob = (val: Ref<boolean>):void => {
       console.log(val);
       isSideBarActiveInMob = val;
-    }
-
-    let hideArrow = ref(false);
-
-    onMounted(():void => {
-      const ctx:any = getCurrentInstance();
-      ctx.refs.main.addEventListener('scroll', throttle((e: Event) => {
-        if (e !== null && e?.target?.scrollTop >= 100) {
-          hideArrow = ref(true);
-        } else {
-          hideArrow = ref(false);
-        }
-      }, 50));
-    })
+    } 
     return {
       isSideBarActiveInMob,
       handleSideBarChangeInMob,
-      hideArrow: hideArrow.value
     }
   },
 })

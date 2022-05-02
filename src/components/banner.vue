@@ -1,21 +1,50 @@
 <template>
   <div class="blog-core__bg">
     <div class="blog-core__motto">
-      人生如逆旅，我亦是行人
+      人生如逆旅，我亦是行人 {{ isArrowActive }}
     </div>
-    <i class="blog-core__arrow-down" :class="{ active: !isArrowActive }"></i>
+    <i class="blog-core__arrow-down" id="arrow"></i>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, Ref } from 'vue'
+import { defineComponent, onMounted, ref, Ref, nextTick } from 'vue'
+
+function throttle(fn: Function, delay: number) {
+  let timer: number | null = null;
+  return function() {
+    const args = arguments;
+    if (!timer) {
+      fn.apply(this, args);
+      timer = setTimeout(() => {
+        timer = null;
+      }, delay);
+    }
+  }
+}
 
 export default defineComponent({
-  props: ['hideArrow'],
-  setup(props, ctx) {
-    let isArrowActive: Ref<boolean> = ref(props.hideArrow);
+  setup() {
+    let isArrowActive: Ref<boolean> = ref(true);
+    onMounted(():void => {
+      window.addEventListener('scroll', throttle((e: Event) => {
+        if (e !== null && e?.target?.scrollTop >= 100) {
+          isArrowActive = ref(false);
+        } else {
+          isArrowActive = ref(true);
+        }
+        nextTick(() => {
+          let arrow = document.querySelector("#arrow");
+          if (isArrowActive.value && arrow !== null) {
+            arrow.style.opacity = "1";
+          } else {
+            arrow.style.opacity = "0";
+          }
+        })
+      }, 10), true);
+    })
     return {
-      isArrowActive
+      isArrowActive,
     }
   },
 })
@@ -57,16 +86,12 @@ export default defineComponent({
     background-size: contain;
     position: absolute;
     bottom: 10rem;
-    transition: all 0.1s ease;
+    transition: all 0.25s ease;
     animation-name: arrow;
     animation-iteration-count: infinite;
     animation-duration: 0.5s;
     animation-direction: alternate;
     animation-timing-function: linear;
-    display: none;
-    &.active {
-      display: inline-block;
-    }
     &::after {
       content: 'more';
       color: #f5f5f5;
