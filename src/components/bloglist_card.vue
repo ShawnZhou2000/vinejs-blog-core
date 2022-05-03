@@ -39,7 +39,7 @@ export default defineComponent({
   }
 
   .blog-core__card-cover {
-    width: $article-area-width;
+    max-width: $article-area-width;
   }
 
   .blog-core__card-title {
@@ -107,5 +107,17 @@ export default defineComponent({
     border: none;
     font-size: 1rem;
     margin-top: 1rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .blog-core__card {
+      width: calc(100vw - 14rem);
+      & > div {
+        width: 100%;
+      }
+    }
+    .blog-core__card-cover {
+      width: 100%;
+    }
   }
 </style>

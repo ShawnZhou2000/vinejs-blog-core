@@ -105,4 +105,10 @@ export default defineComponent({
       letter-spacing: 1px;
     }
   }
+
+  @media screen and (max-width: 1440px) {
+    .blog-core__motto {
+      margin: 0 4rem;
+    }
+  }
 </style>

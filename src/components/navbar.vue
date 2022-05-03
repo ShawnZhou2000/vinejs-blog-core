@@ -130,5 +130,9 @@ export default defineComponent({
     .blog-core__mob-toggle {
       display: flex;
     }
+
+    .blog-core__navbar {
+      width: 100%;
+    }
   }
 </style>

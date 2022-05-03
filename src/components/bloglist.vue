@@ -57,8 +57,19 @@ export default defineComponent({
     justify-content: center;
     border-top: 1px solid $border-color;
     .blog-core__blog-list {
-      width: $article-area-width;
       margin-bottom: 5rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .blog-core__blog-list-container .blog-core__blog-list {
+      width: $article-area-width;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .blog-core__blog-list-container .blog-core__blog-list {
+      margin: 0 7rem 5rem 7rem;
     }
   }
 </style>
