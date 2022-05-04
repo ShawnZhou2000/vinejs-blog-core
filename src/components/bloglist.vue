@@ -1,81 +1,81 @@
 <template>
   <div class="blog-core__blog-list-container">
     <div class="blog-core__blog-list">
-      <bloglist-card-vue v-for="(blogItem, index) in blogList" :key="index" :data="blogItem"></bloglist-card-vue>
+      <bloglist-card-vue
+        v-for="(blogItem, index) in blogList"
+        :key="index"
+        :data="blogItem"
+      ></bloglist-card-vue>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import bloglistCardVue from './bloglist_card.vue';
+import { defineComponent } from "vue";
+import bloglistCardVue from "./bloglist_card.vue";
+import routes from "pages-generated";
+import dayjs from 'dayjs'
 
 type blogItem = {
-  title: string,
-  time: string,
-  categories: string,
-  abstract: string,
-  cover: string
-}
+  title: string;
+  time: string;
+  categories: string;
+  abstract: string;
+  cover: string;
+  path: string;
+};
 
 export default defineComponent({
   components: {
     bloglistCardVue,
   },
   setup() {
-    const blogList: Array<blogItem> = [
-      {
-        title: '浅谈前端开发中的产品思维',
-        time: '2022-04-30',
-        categories: '杂谈与随想',
-        abstract: `前段时间一直埋头在毕业设计中，总想着再写篇博客来告别今年的四月，那就来简单聊一下前端开发中的产品思维吧。<br/><br/>
-        前端工程师的产出直接面向用户，应当对产品、交互和用户体验等层面有一定的认识。在公司有产品经理负责与前端对接产品方面的工作，但这并不代表前端工程师就不需要产品思维了。相反，产品思维能够作为一条重要的思路贯穿到整个开发工作流中，帮助前端工程师更好的去思考怎样将界面和交互做到更适合用户使用，更能让用户提升对产品的黏性，从而推进一款产品逐渐走向成功。<br/><br/>
-        产品思维并不是一个普适性、固定性的思维，能根据既有的方法论总结出一套专属于自己的产品思维才是最有价值的。字节跳动的面试官也曾问过我“谈谈你对产品Sense的理解”，能够掌握产品思维的基本方法并将其实际应用在前端领域，对前端工程师来说是一项比较重要的能力。本文结合一些资料简单介绍了我对前端产品思维的一些认识，并希望能以此为题引起更多对技术和业务的思考和理解。`,
-        cover: 'https://shawnzhou-image.oss-cn-beijing.aliyuncs.com/blog/image9b7c7ba52afe9c5f5ed86a33ae4578d6.jpg'
-      },
-      {
-        title: '浅谈前端开发中的产品思维',
-        time: '2022-04-30',
-        categories: '杂谈与随想',
-        abstract: `前段时间一直埋头在毕业设计中，总想着再写篇博客来告别今年的四月，那就来简单聊一下前端开发中的产品思维吧。<br/><br/>
-        前端工程师的产出直接面向用户，应当对产品、交互和用户体验等层面有一定的认识。在公司有产品经理负责与前端对接产品方面的工作，但这并不代表前端工程师就不需要产品思维了。相反，产品思维能够作为一条重要的思路贯穿到整个开发工作流中，帮助前端工程师更好的去思考怎样将界面和交互做到更适合用户使用，更能让用户提升对产品的黏性，从而推进一款产品逐渐走向成功。<br/><br/>
-        产品思维并不是一个普适性、固定性的思维，能根据既有的方法论总结出一套专属于自己的产品思维才是最有价值的。字节跳动的面试官也曾问过我“谈谈你对产品Sense的理解”，能够掌握产品思维的基本方法并将其实际应用在前端领域，对前端工程师来说是一项比较重要的能力。本文结合一些资料简单介绍了我对前端产品思维的一些认识，并希望能以此为题引起更多对技术和业务的思考和理解。`,
-        cover: 'https://shawnzhou-image.oss-cn-beijing.aliyuncs.com/blog/image9b7c7ba52afe9c5f5ed86a33ae4578d6.jpg'
-      }
-    ]
+    const matchReg = /articles\//;
+    const blogList: Array<blogItem> = routes
+      .filter((item) => matchReg.test(item.path))
+      .map((item) => {
+        return {
+          title: item?.meta?.frontmatter.title,
+          time: dayjs(item?.meta?.frontmatter.time).format('YYYY-MM-DD'),
+          categories: item?.meta?.frontmatter.categories,
+          abstract: item?.meta?.frontmatter.abstract,
+          cover: item?.meta?.frontmatter.cover,
+          path: item?.path,
+        };
+      });
     return {
       blogList,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
-  .blog-core__blog-list-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: 1px solid $border-color;
-    .blog-core__blog-list {
-      margin-bottom: 5rem;
-    }
+.blog-core__blog-list-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid $border-color;
+  .blog-core__blog-list {
+    margin-bottom: 5rem;
   }
+}
 
-  @media screen and (min-width: 1024px) {
-    .blog-core__blog-list-container .blog-core__blog-list {
-      width: $article-area-width;
-    }
+@media screen and (min-width: 1024px) {
+  .blog-core__blog-list-container .blog-core__blog-list {
+    width: $article-area-width;
   }
+}
 
-  @media screen and (max-width: 1024px) {
-    .blog-core__blog-list-container .blog-core__blog-list {
-      margin: 0 7rem 5rem 7rem;
-    }
+@media screen and (max-width: 1024px) {
+  .blog-core__blog-list-container .blog-core__blog-list {
+    margin: 0 7rem 5rem 7rem;
   }
+}
 
-  @media screen and (max-width: 425px) {
-    .blog-core__blog-list-container .blog-core__blog-list {
-      margin: 0 2rem 5rem 0;
-    }
+@media screen and (max-width: 425px) {
+  .blog-core__blog-list-container .blog-core__blog-list {
+    margin: 0 2rem 5rem 0;
   }
+}
 </style>

@@ -11,7 +11,11 @@
       <p class="blog-core__card-text-abstract" v-html="data.abstract">
       </p>
       <img :src="data.cover" class="blog-core__card-cover">
-      <button class="blog-core__card-button-more">阅读全文</button>
+      <router-link :to="data.path">
+        <button class="blog-core__card-button-more" >
+          阅读全文
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -107,6 +111,10 @@ export default defineComponent({
     border: none;
     font-size: 1rem;
     margin-top: 1rem;
+    &:hover {
+      cursor: pointer;
+      background-color: #636060;
+    }
   }
 
   @media screen and (max-width: 1024px) {

@@ -2,26 +2,37 @@
   <div class="blog-core__side-container">
     <div class="blog-core__side-main">
       <div class="blog-core__center">
-        <img src="../../public/favicon.png" alt="avatar"/>
-        <h1>My Blog</h1>
-        <p>A simple Vine.js blog</p>
+        <img :src="config.data.avatar_image" alt="avatar"/>
+        <h1>{{ config.data.blog_name }}</h1>
+        <p>{{ config.data.blog_description }}</p>
         <div class="blog-core__iconlist"></div>
       </div>
     </div>
-    <footer-vue></footer-vue>
+    <footer-vue :owner="config.data.owner" :start="config.data.site_start_time" :beian="config.data.beian" :theme="config.data.theme"></footer-vue>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import footerVue from '../components/footer.vue';
+import {
+  getCoreConfig
+} from '../api/blogSettings'
 
 export default defineComponent({
   components: {
     footerVue
   },
   setup() {
-    
+    let config:any = reactive({data: {}});
+    getCoreConfig()
+      .then(res => {
+        config.data = res.settings;
+        console.log(res.settings);
+      })
+    return {
+      config,
+    }
   },
 })
 </script>

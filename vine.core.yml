@@ -1,4 +1,33 @@
-name: 'blog core'
-author: 'Shawn Zhou'
-version: '0.0.1'
-icon: ''
+name: "blog core"
+author: "Shawn Zhou"
+version: "0.0.1"
+orbment_color: "green"
+
+# 以上配置请不要随意修改，否则可能会出现问题。可以修改下面的配置。
+
+navigator:
+  首页: /
+  归档: /category
+  关于: /about
+settings:
+  # 侧边栏头像，推荐大小200*200px，文件请放在public文件夹下
+  avatar_image: /favicon.png
+  # 博客名称
+  blog_name: "我的博客"
+  blog_description: "一个简单的Vine blog" # 博客简介
+  banner_motto: "人生如逆旅，我亦是行人" # banner图上的一句话格言，也可以写其他你喜欢的内容，字数不要太多，否则可能会折行
+  owner: "Shawn Zhou" # 博客拥有者
+  site_start_time: 2022 # 网站起始时间，如果此年份和当前年份一致，则不显示为区间样式
+  banner_pic: # 手动修改banner图，但不太建议新手同学这么做
+  page_step: 10 # 博文分页，每页的文章数量
+  beian: # 网站备案信息，网站部署到中国大陆服务器的同学必填，记得把enable设置为true
+    enable: false
+    icp: # ICP备案号
+      url: "http://www.beian.miit.gov.cn/"
+      text: "鲁ICP备12341234"
+    police: # 公安备案信息
+      url: "http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=01234567890123"
+      text: "鲁公网安备01234567890123号"
+
+  # 默认主题为horizon，可选主题有sakura, twilight, star-sky
+  theme: horizon

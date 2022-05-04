@@ -1,9 +1,26 @@
 <template>
   <div class="blog-core__footer-container">
-    <p>Copyrights © 2022  Shawn Zhou</p>
-    <p>由 Vine.js 强力驱动 | 主核心 - blog-core:horizon</p>    
+    <p>Copyrights © {{ start }} {{ owner }}</p>
+    <p>由 Vine.js 强力驱动 | 主核心 - blog-core:{{theme}}</p>    
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, toRef } from 'vue'
+
+export default defineComponent({
+  props: ['owner', 'start', 'beian', 'theme'],
+  setup(props, ctx) {
+    return {
+      owner: toRef(props, 'owner'),
+      start: toRef(props, 'start'),
+      beian: toRef(props, 'beian'),
+      theme: toRef(props, 'theme'),
+    }
+  },
+})
+</script>
+
 
 <style scoped lang="scss">
   .blog-core__footer-container {
