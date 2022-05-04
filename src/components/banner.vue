@@ -111,4 +111,18 @@ export default defineComponent({
       margin: 0 4rem;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .blog-core__motto {
+      font-size: 2rem;
+      margin: 0 2rem;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    .blog-core__motto {
+      font-size: 26px;
+      margin: 0 1rem;
+    }
+  }
 </style>

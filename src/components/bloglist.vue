@@ -72,4 +72,10 @@ export default defineComponent({
       margin: 0 7rem 5rem 7rem;
     }
   }
+
+  @media screen and (max-width: 425px) {
+    .blog-core__blog-list-container .blog-core__blog-list {
+      margin: 0 2rem 5rem 0;
+    }
+  }
 </style>

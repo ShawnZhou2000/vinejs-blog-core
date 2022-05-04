@@ -120,4 +120,16 @@ export default defineComponent({
       width: 100%;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .blog-core__card {
+      width: calc(100vw - 8rem);
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    .blog-core__card {
+      width: calc(100vw - 4rem);
+    }
+  }
 </style>
