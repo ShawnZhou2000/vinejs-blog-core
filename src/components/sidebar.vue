@@ -34,7 +34,7 @@ export default defineComponent({
     height: 100%;
     color: #464646;
     position: fixed;
-    width: $sidebar-width;
+    width: inherit;
     .blog-core__side-main {
       flex: 1;
       display: flex;

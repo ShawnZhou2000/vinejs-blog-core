@@ -37,11 +37,11 @@ export default defineComponent({
       },
     ];
     let activePage: Ref<number> = ref(0);
-    let isSideBarActiveInMob: Ref<boolean> = ref(false);
+    let isSideBarActiveInMob: Ref<boolean> = ref(true);
 
     const showSideBar = ():void => {
-      isSideBarActiveInMob = ref(!isSideBarActiveInMob);
-      ctx.emit('sideBarChangeInMob', isSideBarActiveInMob);
+      isSideBarActiveInMob.value = !isSideBarActiveInMob.value;
+      ctx.emit('sideBarChangeInMob', isSideBarActiveInMob.value);
     }
 
     return {
@@ -133,6 +133,7 @@ export default defineComponent({
 
     .blog-core__navbar {
       width: 100%;
+      padding: 0 8px;
     }
   }
 </style>

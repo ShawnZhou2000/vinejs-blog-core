@@ -1,5 +1,10 @@
 <template>
   <div class="blog-core__container">
+    <div class="blog-core__mask" 
+      v-show="isSideBarActiveInMob" 
+      @click="handleMaskClose" 
+      :class="{ 'active': isSideBarActiveInMob }">
+    </div>
     <div class="blog-core__side" :class="{ 'active': isSideBarActiveInMob }">
       <sidebar-vue></sidebar-vue>
     </div>
@@ -27,19 +32,39 @@ export default defineComponent({
   },
   setup(props, ctx) {
     let isSideBarActiveInMob: Ref<boolean> = ref(false);
-    const handleSideBarChangeInMob = (val: Ref<boolean>):void => {
-      console.log(val);
-      isSideBarActiveInMob = val;
+    const handleSideBarChangeInMob = (val: boolean):void => {
+      isSideBarActiveInMob.value = val;
     } 
+    const handleMaskClose = () => {
+      handleSideBarChangeInMob(!isSideBarActiveInMob.value);
+    }
     return {
       isSideBarActiveInMob,
       handleSideBarChangeInMob,
+      handleMaskClose
     }
   },
 })
 </script>
 
 <style scoped lang="scss">
+
+  .blog-core__mask {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000000, $alpha:0.7);
+    opacity: 0;
+    transition: all .1s ease;
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    0% { left: -100%; }
+    100% { left: 0%; }
+  }
   .blog-core__container {
     width: 100vw;
     display: flex;
@@ -48,12 +73,18 @@ export default defineComponent({
   }
 
   .blog-core__side {
+    width: $sidebar-width;
     flex-basis: $sidebar-width;
     height: 100vh;
     border-right: 1px solid $border-color;
     background: $side-bg;
     &.active {
       display: flex;
+      position: absolute;
+      left: 0;
+      width: 75%;
+      z-index: 10;
+      animation: slideIn 0.5s ease;
     }
   }
 
