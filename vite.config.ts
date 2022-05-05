@@ -5,7 +5,7 @@ import matter from "gray-matter";
 import { defineConfig } from "vite";
 import ViteVue from "@vitejs/plugin-vue";
 import ViteMarkdown from "vite-plugin-md";
-import Components from 'unplugin-vue-components/vite'
+import Components from 'unplugin-vue-components/vite';
 
 // plugins settings
 export default defineConfig({

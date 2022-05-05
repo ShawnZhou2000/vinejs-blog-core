@@ -15,23 +15,22 @@
 
 <script lang="ts">
 import { defineComponent, Ref, ref, reactive } from 'vue';
-import {
-  getCoreConfig
-} from '../api/blogSettings'
 
 export default defineComponent({
   setup(props, ctx) {
     let config:any = reactive({data: []});
-    getCoreConfig()
-      .then(res => {
-        Object.keys(res.navigator).forEach((item, index) => {
-          config.data.push({
-            name: item,
-            nav: res.navigator[item],
-            id: index
-          });
-        });
-      })
+    let res:any = reactive({data: {}});
+    if (!import.meta.env.SSR) {
+      res.data = JSON.parse(window.localStorage.getItem('data'));
+    }
+
+    Object.keys(res.data.navigator).forEach((item, index) => {
+      config.data.push({
+        name: item,
+        nav: res.data.navigator[item],
+        id: index
+      });
+    });
     let activePage: Ref<number> = ref(0);
     let isSideBarActiveInMob: Ref<boolean> = ref(true);
 

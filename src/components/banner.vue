@@ -1,7 +1,8 @@
 <template>
-  <div class="blog-core__bg" :style="config.data.banner_pic !== null ? `background: url('${config.data.banner_pic}'); background-size: cover;` : ''">
+  <div class="blog-core__bg" 
+    :style="config.data.settings.banner_pic !== null ? `background: url('${config.data.settings.banner_pic}'); background-size: cover;` : ''">
     <div class="blog-core__motto">
-      {{ config.data.banner_motto }}
+      {{ config.data.settings.banner_motto }}
     </div>
     <i class="blog-core__arrow-down" id="arrow"></i>
   </div>
@@ -9,10 +10,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, Ref, nextTick, reactive, onUnmounted } from 'vue';
-import {
-  getCoreConfig
-} from '../api/blogSettings'
-
 function throttle(fn: Function, delay: number) {
   let timer: number | null = null;
   return function() {
@@ -29,10 +26,9 @@ function throttle(fn: Function, delay: number) {
 export default defineComponent({
   setup() {
     let config:any = reactive({data: {}});
-    getCoreConfig()
-      .then(res => {
-        config.data = res.settings;
-      })
+    if (!import.meta.env.SSR) {
+      config.data = JSON.parse(window.localStorage.getItem('data'));
+    }
     let isArrowActive: Ref<boolean> = ref(true);
     onMounted(():void => {
       window.addEventListener('scroll', throttle((e: any) => {

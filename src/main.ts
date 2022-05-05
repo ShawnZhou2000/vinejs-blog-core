@@ -1,21 +1,25 @@
 import App from './App.vue';
 import routes from 'pages-generated';
 import { ViteSSG } from 'vite-ssg';
-import { createRouter, createWebHistory } from "vue-router";
+import "fs";
+
+import {
+  getCoreConfig
+} from './api/blogSettings'
+
 
 export const createApp = ViteSSG(
   App, 
   { routes },
-  ({ app, router, initialState, isClient, onSSRAppRendered }) => {
-    console.log(onSSRAppRendered(() => {
-      // console.log('hello?');
-    }));
-    // app.use(
-    //   createRouter({
-    //     history: createWebHistory(),
-    //     routes,
-    //   })
-    // );
-    // console.log(routes);
+  ({ app, router }) => {
+    getCoreConfig()
+    .then(res => {
+      router.beforeEach((to, from, next) => {
+        if (!import.meta.env.SSR) {
+          window.localStorage.setItem('data', JSON.stringify(res));
+        }
+        next();
+      })
+    })
   }
 );
