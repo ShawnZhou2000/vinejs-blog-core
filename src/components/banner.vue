@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, Ref, nextTick, reactive } from 'vue';
+import { defineComponent, onMounted, ref, Ref, nextTick, reactive, onUnmounted } from 'vue';
 import {
   getCoreConfig
 } from '../api/blogSettings'
@@ -43,10 +43,12 @@ export default defineComponent({
         }
         nextTick(() => {
           let arrow:any = document.querySelector("#arrow");
-          if (isArrowActive.value && arrow !== null) {
-            arrow.style.opacity = "1";
-          } else {
-            arrow.style.opacity = "0";
+          if (arrow !== null) {
+            if (isArrowActive.value) {
+              arrow.style.opacity = "1";
+            } else {
+              arrow.style.opacity = "0";
+            }
           }
         })
       }, 10), true);

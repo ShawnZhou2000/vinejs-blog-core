@@ -33,7 +33,7 @@ export default defineComponent({
     const matchReg = /articles\//;
     const blogList: Array<blogItem> = routes
       .filter((item) => matchReg.test(item.path))
-      .map((item) => {
+      .map((item:any) => {
         return {
           title: item?.meta?.frontmatter.title,
           time: dayjs(item?.meta?.frontmatter.time).format('YYYY-MM-DD'),
