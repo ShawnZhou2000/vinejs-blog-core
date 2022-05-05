@@ -4,7 +4,7 @@
       <li class="blog-core__mob-toggle" @click="showSideBar">
         <div class="blog-core__mob-toggle-btn"></div>
       </li>
-      <li v-for="navItem in navList" :key="navItem.id">
+      <li v-for="navItem in config.data" :key="navItem.id">
         <router-link :to="navItem.nav" :class="{ active: activePage===navItem.id }" class="blog-core__list-item">
           {{ navItem.name }}
         </router-link>
@@ -14,28 +14,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from 'vue'
-
-type NavItem = {
-  name: string,
-  nav: string,
-  id: number
-}
+import { defineComponent, Ref, ref, reactive } from 'vue';
+import {
+  getCoreConfig
+} from '../api/blogSettings'
 
 export default defineComponent({
   setup(props, ctx) {
-    let navList: Array<NavItem> = [
-      {
-        name: '首页',
-        nav: '/',
-        id: 0,
-      },
-      {
-        name: '关于',
-        nav: '/about',
-        id: 1,
-      },
-    ];
+    let config:any = reactive({data: []});
+    getCoreConfig()
+      .then(res => {
+        Object.keys(res.navigator).forEach((item, index) => {
+          config.data.push({
+            name: item,
+            nav: res.navigator[item],
+            id: index
+          });
+        });
+      })
     let activePage: Ref<number> = ref(0);
     let isSideBarActiveInMob: Ref<boolean> = ref(true);
 
@@ -45,10 +41,10 @@ export default defineComponent({
     }
 
     return {
-      navList,
+      config,
       activePage,
       showSideBar,
-      isSideBarActiveInMob
+      isSideBarActiveInMob,
     }
   },
 })

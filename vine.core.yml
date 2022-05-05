@@ -28,6 +28,12 @@ settings:
     police: # 公安备案信息
       url: "http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=01234567890123"
       text: "鲁公网安备01234567890123号"
-
+  icon_link:
+  - icon: "/github.svg"
+    link: "https://github.com/ShawnZhou2000"
+  - icon: "/zhihu.svg"
+    link: "https://www.zhihu.com/"
+  - icon: "/weibo.svg"
+    link: "https://weibo.com/"
   # 默认主题为horizon，可选主题有sakura, twilight, star-sky
   theme: horizon

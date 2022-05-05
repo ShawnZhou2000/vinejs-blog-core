@@ -1,7 +1,7 @@
 <template>
   <div class="blog-core__footer-container">
     <p>Copyrights © {{ siteTime }} {{ owner }}</p>
-    <p v-if="beian?.enable">
+    <p v-if="beian?.enable" class="blog-core__beian">
       <a :href="beian.icp.url" target="_blank" class="blog-core__icp">{{ beian.icp.text }}</a>
       <a :href="beian.police.url" target="_blank" class="blog-core__police">{{ beian.police.text }}</a>
     </p>
@@ -71,5 +71,17 @@ export default defineComponent({
     background-size: contain;
     position: absolute;
     left: -1.2rem;
+  }
+
+  @media screen and (max-width: 425px) {
+    .blog-core__beian {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .blog-core__icp {
+        margin: 0;
+      }
+    }
   }
 </style>
