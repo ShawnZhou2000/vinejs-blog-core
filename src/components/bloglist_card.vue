@@ -1,8 +1,10 @@
 <template>
   <div class="blog-core__card">
-    <div class="blog-core__card-title">
-      {{ data.title }}
-    </div>
+    <router-link :to="data.path" class="blog-core__router-link">
+      <div class="blog-core__card-title">
+        {{ data.title }}
+      </div>
+    </router-link>
     <div class="blog-core__card-meta">
       <span class="blog-core__card-time">{{ data.time }}</span>
       <span class="blog-core__card-categories">{{ data.categories }}</span>
@@ -46,6 +48,10 @@ export default defineComponent({
     max-width: $article-area-width;
   }
 
+  .blog-core__router-link {
+    text-decoration: none;
+  }
+
   .blog-core__card-title {
     font-size: 34px;
     font-weight: 700;
@@ -54,6 +60,12 @@ export default defineComponent({
     color: #403e3e;
     padding-left: 2rem;
     border-left: 4px solid #403e3e;
+    transition: all .1s ease;
+
+    &:hover {
+      padding-left: 1rem;
+      border-left: 10px solid #403e3e;
+    }
   }
 
   .blog-core__card-meta {

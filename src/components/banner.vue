@@ -1,14 +1,17 @@
 <template>
-  <div class="blog-core__bg">
+  <div class="blog-core__bg" :style="config.data.banner_pic !== null ? `background: url('${config.data.banner_pic}'); background-size: cover;` : ''">
     <div class="blog-core__motto">
-      人生如逆旅，我亦是行人
+      {{ config.data.banner_motto }}
     </div>
     <i class="blog-core__arrow-down" id="arrow"></i>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, Ref, nextTick } from 'vue'
+import { defineComponent, onMounted, ref, Ref, nextTick, reactive } from 'vue';
+import {
+  getCoreConfig
+} from '../api/blogSettings'
 
 function throttle(fn: Function, delay: number) {
   let timer: number | null = null;
@@ -25,16 +28,21 @@ function throttle(fn: Function, delay: number) {
 
 export default defineComponent({
   setup() {
+    let config:any = reactive({data: {}});
+    getCoreConfig()
+      .then(res => {
+        config.data = res.settings;
+      })
     let isArrowActive: Ref<boolean> = ref(true);
     onMounted(():void => {
-      window.addEventListener('scroll', throttle((e: Event) => {
+      window.addEventListener('scroll', throttle((e: any) => {
         if (e !== null && e?.target?.scrollTop >= 100) {
           isArrowActive = ref(false);
         } else {
           isArrowActive = ref(true);
         }
         nextTick(() => {
-          let arrow = document.querySelector("#arrow");
+          let arrow:any = document.querySelector("#arrow");
           if (isArrowActive.value && arrow !== null) {
             arrow.style.opacity = "1";
           } else {
@@ -45,6 +53,7 @@ export default defineComponent({
     })
     return {
       isArrowActive,
+      config
     }
   },
 })
@@ -62,7 +71,7 @@ export default defineComponent({
     }
   }
   .blog-core__bg {
-    background: url('../../public/horizon_banner.jpg');
+    background: url('/horizon_banner.jpg');
     height: 100vh;
     background-size: cover;
     display: flex;
