@@ -1,10 +1,10 @@
 <template>
-  <layout></layout>
+  <layout :render="'index'"></layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import layout from '../src/pages/layout.vue';
+import layout from '../src/components/layout.vue';
 
 export default defineComponent({
   components: {
