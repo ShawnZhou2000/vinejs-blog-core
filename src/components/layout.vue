@@ -16,22 +16,27 @@
         <bloglist-vue></bloglist-vue>
       </template>
       <template v-if="renderMode === 'article'">
-        <div class="blog-core__article-box" v-if="renderMode === 'article'">
+        <div class="blog-core__article-box">
           <div class="blog-core__frontmatter">
-            <h1 class="blog-core__frontmatter-title">{{ frontmatter.title }}</h1>
+            <h1 class="blog-core__frontmatter-title">
+              {{ frontmatter.title }}
+            </h1>
             <div class="blog-core__frontmatter-meta">
-              <span class="blog-core__frontmatter-time">{{
-                "发布日期：" + frontmatter.time
-              }}</span>
-              <span class="blog-core__frontmatter-categories">{{
-                "收录于：" + frontmatter.categories
-              }}</span>
+              <span class="blog-core__frontmatter-time">
+                {{ "发布日期：" + frontmatter.time }}
+              </span>
+              <span class="blog-core__frontmatter-categories">
+                {{ "收录于：" + frontmatter.categories }}
+              </span>
               <p
                 class="blog-core__frontmatter-text-abstract"
                 v-html="frontmatter.abstract"
               ></p>
             </div>
-            <img :src="frontmatter.cover" class="blog-core__frontmatter-cover" />
+            <img
+              :src="frontmatter.cover"
+              class="blog-core__frontmatter-cover"
+            />
           </div>
           <div class="blog-core__article" id="mount"></div>
           <div class="blog-core__end">
@@ -39,74 +44,99 @@
           </div>
         </div>
       </template>
-      <template v-if="renderMode === 'category'">
-        
-      </template>
+      <template v-if="renderMode === 'category'"> </template>
       <template v-if="renderMode === 'about'">
-        
+        <div class="blog-core__article-box">
+          <div class="blog-core__frontmatter">
+            <h1 class="blog-core__frontmatter-title">{{ aboutPage.title }}</h1>
+            <div class="blog-core__frontmatter-meta">
+              <span class="blog-core__frontmatter-time">
+                {{ "发布日期：" + aboutPage.time }}
+              </span>
+            </div>
+          </div>
+          <div class="blog-core__about-logo"></div>
+          <div class="blog-core__article" id="mount"></div>
+          <div class="blog-core__end">
+            <hr />
+          </div>
+        </div>
       </template>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRef, Ref, ref, onMounted, getCurrentInstance } from 'vue';
+import {
+  defineComponent,
+  toRef,
+  Ref,
+  ref,
+  onMounted,
+  getCurrentInstance,
+} from "vue";
 import routes from "pages-generated";
 import dayjs from "dayjs";
-import bannerVue from './banner.vue';
-import sidebarVue from './sidebar.vue';
-import navbarVue from './navbar.vue';
-import bloglistVue from './bloglist.vue';
+import bannerVue from "./banner.vue";
+import sidebarVue from "./sidebar.vue";
+import navbarVue from "./navbar.vue";
+import bloglistVue from "./bloglist.vue";
 
 type blogItem = {
   title: string;
   time: string;
-  categories: string;
-  abstract: string;
-  cover: string;
+  categories?: string;
+  abstract?: string;
+  cover?: string;
   path: string;
 };
 
 export default defineComponent({
-  props: ['render'],
+  props: ["render"],
   components: {
     bannerVue,
     sidebarVue,
     navbarVue,
-    bloglistVue
+    bloglistVue,
   },
   setup(props, ctx) {
-    const renderMode:Ref<string> = toRef(props, 'render');
+    const renderMode: Ref<string> = toRef(props, "render");
     let isSideBarActiveInMob: Ref<boolean> = ref(false);
     const matchReg = /articles\//;
-    const blogList: Array<blogItem> = routes
-      .filter((item) => {
-        if (typeof window !== "undefined") {
-          return (
-            matchReg.test(item.path) && window.location.pathname === item.path
-          );
-        } else {
-          return matchReg.test(item.path);
-        }
-      })
-      .map((item: any) => {
-        return {
-          title: item?.meta?.frontmatter.title,
-          time: dayjs(item?.meta?.frontmatter.time).format("YYYY-MM-DD"),
-          categories: item?.meta?.frontmatter.categories,
-          abstract: item?.meta?.frontmatter.abstract,
-          cover: item?.meta?.frontmatter.cover,
-          path: item?.path,
-        };
-      });
-    
-    if (renderMode.value === 'index') {
-      
-    }
+    let blogPage: blogItem = {
+      title: '',
+      time: '',
+      categories: '',
+      abstract: '',
+      cover: '',
+      path: '',
+    };
+    let aboutPage: blogItem = {
+      title: '',
+      time: '',
+      path: '',
+    };
 
-    if (renderMode.value === 'article') {
+    if (renderMode.value === "about") {
+      aboutPage = routes
+        .filter((item) => {
+          if (typeof window !== "undefined") {
+            return (
+              /about/.test(item.path) && window.location.pathname === item.path
+            );
+          } else {
+            return /about/.test(item.path);
+          }
+        })
+        .map((item: any) => {
+          return {
+            title: item?.meta?.frontmatter.title,
+            time: dayjs(item?.meta?.frontmatter.time).format("YYYY-MM-DD"),
+            path: item?.path,
+          };
+        })[0];
       if (typeof document !== "undefined") {
-        document.title = `${blogList[0].title} | ${document.title}`;
+        document.title = `${aboutPage.title} | ${document.title}`;
       }
       onMounted(() => {
         let dom: any = document.getElementById("mount");
@@ -115,12 +145,39 @@ export default defineComponent({
       });
     }
 
-    if (renderMode.value === 'category') {
+    if (renderMode.value === "article") {
+      blogPage = routes
+        .filter((item) => {
+          if (typeof window !== "undefined") {
+            return (
+              matchReg.test(item.path) && window.location.pathname === item.path
+            );
+          } else {
+            return matchReg.test(item.path);
+          }
+        })
+        .map((item: any) => {
+          return {
+            title: item?.meta?.frontmatter.title,
+            time: dayjs(item?.meta?.frontmatter.time).format("YYYY-MM-DD"),
+            categories: item?.meta?.frontmatter.categories,
+            abstract: item?.meta?.frontmatter.abstract,
+            cover: item?.meta?.frontmatter.cover,
+            path: item?.path,
+          };
+        })[0];
 
+      if (typeof document !== "undefined") {
+        document.title = `${blogPage.title} | ${document.title}`;
+      }
+      onMounted(() => {
+        let dom: any = document.getElementById("mount");
+        let article = document.getElementsByTagName("article")[0];
+        dom.appendChild(article);
+      });
     }
 
-    if (renderMode.value === 'about') {
-
+    if (renderMode.value === "category") {
     }
 
     const handleSideBarChangeInMob = (val: boolean): void => {
@@ -129,31 +186,43 @@ export default defineComponent({
     const handleMaskClose = () => {
       handleSideBarChangeInMob(!isSideBarActiveInMob.value);
     };
-    
+
     return {
       isSideBarActiveInMob,
       handleSideBarChangeInMob,
       handleMaskClose,
-      frontmatter: blogList[0],
-      blogList,
-      renderMode
+      frontmatter: blogPage,
+      renderMode,
+      aboutPage,
     };
   },
-})
+});
 </script>
-
 
 <style lang="scss">
 article {
   color: #403e3e;
   width: $article-width;
   line-height: 1.6;
-  h1, h2, h3, h4, h5, h6 { margin: 2.5rem 0 1.5rem; }
-  dl, ol, ul {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 2.5rem 0 1.5rem;
+  }
+  dl,
+  ol,
+  ul {
     margin: 1.5rem 0;
     padding-left: 1rem;
   }
-  blockquote, p, table { margin: 1.5rem 0; }
+  blockquote,
+  p,
+  table {
+    margin: 1.5rem 0;
+  }
 
   blockquote {
     display: block;
@@ -170,14 +239,28 @@ article {
     }
   }
 
-  html { line-height: 1.15; }
+  html {
+    line-height: 1.15;
+  }
 
-  h1 { font-size: 30px;}
-  h2 { font-size: 28px;}
-  h3 { font-size: 26px;}
-  h4 { font-size: 24px;}
-  h5 { font-size: 21px;}
-  h6 { font-size: 18px;}
+  h1 {
+    font-size: 30px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  h3 {
+    font-size: 26px;
+  }
+  h4 {
+    font-size: 24px;
+  }
+  h5 {
+    font-size: 21px;
+  }
+  h6 {
+    font-size: 18px;
+  }
 
   hr {
     box-sizing: content-box;
@@ -190,46 +273,70 @@ article {
     font-size: 1em;
   }
 
-  a { background-color: transparent; }
+  a {
+    background-color: transparent;
+  }
 
-  b, strong {
+  b,
+  strong {
     font-weight: bolder;
   }
 
-  code, kbd, samp {
+  code,
+  kbd,
+  samp {
     font-family: monospace, monospace;
     font-size: 1em;
   }
 
-  small { font-size: 80%; }
+  small {
+    font-size: 80%;
+  }
 
-  sub, sup {
+  sub,
+  sup {
     font-size: 75%;
     line-height: 0;
     position: relative;
     vertical-align: baseline;
   }
 
-  sub { bottom: -0.25em; }
+  sub {
+    bottom: -0.25em;
+  }
 
-  sup { top: -0.5em; }
+  sup {
+    top: -0.5em;
+  }
 
-  img { border-style: none; }
+  img {
+    border-style: none;
+  }
 
-  button, input, optgroup, select, textarea {
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
     margin: 0;
   }
 
-  button, input { overflow: visible; }
+  button,
+  input {
+    overflow: visible;
+  }
 
-  button, select {
+  button,
+  select {
     text-transform: none;
   }
 
-  fieldset { padding: 0.35em 0.75em 0.625em; }
+  fieldset {
+    padding: 0.35em 0.75em 0.625em;
+  }
 
   legend {
     box-sizing: border-box;
@@ -240,9 +347,13 @@ article {
     white-space: normal;
   }
 
-  progress { vertical-align: baseline; }
+  progress {
+    vertical-align: baseline;
+  }
 
-  textarea { overflow: auto; }
+  textarea {
+    overflow: auto;
+  }
 
   img {
     max-width: 100%;
@@ -254,6 +365,18 @@ article {
 </style>
 
 <style scoped lang="scss">
+
+.blog-core__about-logo {
+  background: url(/vine-js-normal.png);
+  background-size: contain;
+  width: 30rem;
+  height: 30rem;
+  opacity: .1;
+  position: absolute;
+  right: 35%;
+  top: 30%;
+  z-index: -1;
+}
 .blog-core__end {
   margin-bottom: 5rem;
 }
