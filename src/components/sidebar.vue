@@ -23,7 +23,7 @@ import { defineComponent, reactive } from 'vue';
 import footerVue from '../components/footer.vue';
 import {
   getCoreConfig
-} from '../api/blogSettings'
+} from '../api/blogSettings';
 
 export default defineComponent({
   components: {

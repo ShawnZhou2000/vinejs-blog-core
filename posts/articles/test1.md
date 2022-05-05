@@ -1,5 +1,5 @@
 ---
-title: 第3篇文章
+title: 浅谈前端开发中的产品思维
 time: 2022-04-24
 categories: hello
 cover: https://shawnzhou-image.oss-cn-beijing.aliyuncs.com/blog/image9b7c7ba52afe9c5f5ed86a33ae4578d6.jpg

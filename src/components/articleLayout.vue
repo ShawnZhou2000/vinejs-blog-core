@@ -14,9 +14,9 @@
         <div class="blog-core__frontmatter">
           <h1 class="blog-core__frontmatter-title">{{ frontmatter.title }}</h1>
           <div class="blog-core__frontmatter-meta">
+            <span class="blog-core__frontmatter-time">{{ '发布日期：' + frontmatter.time }}</span>
+            <span class="blog-core__frontmatter-categories">{{ '收录于：' + frontmatter.categories }}</span>
             <p class="blog-core__frontmatter-text-abstract" v-html="frontmatter.abstract"></p>
-            <span class="blog-core__frontmatter-time">{{ frontmatter.time }}</span>
-            <span class="blog-core__frontmatter-categories">{{ frontmatter.categories }}</span>
           </div>
           <img :src="frontmatter.cover" class="blog-core__frontmatter-cover">
         </div>
@@ -68,7 +68,10 @@ export default defineComponent({
           path: item?.path,
         };
       });
-    
+    if (typeof document !== 'undefined') {
+      document.title = `${blogList[0].title} | ${document.title}`;
+    }
+
     const handleSideBarChangeInMob = (val: boolean):void => {
       isSideBarActiveInMob.value = val;
     } 
@@ -98,6 +101,47 @@ export default defineComponent({
 </style>
 
 <style scoped lang="scss">
+
+  .blog-core__frontmatter-text-abstract {
+    border-top: 1px solid #efefef;
+    padding-top: 2rem;
+  }
+
+  .blog-core__frontmatter-meta {
+    position: relative;
+    .blog-core__frontmatter-categories, .blog-core__frontmatter-time {
+      padding-left: 20px;
+      vertical-align: super;
+      color: $text-gray;
+    }
+    .blog-core__frontmatter-categories {
+      position: relative;
+      margin-left: 20px;
+    }
+  }
+
+  .blog-core__frontmatter-time::before {
+    content: ' ';
+    width: 16px;
+    height: 16px;
+    background: url('../../public/calendar.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+  }
+
+  .blog-core__frontmatter-categories::before {
+    content: ' ';
+    width: 16px;
+    height: 16px;
+    background: url('../../public/categories.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+  }
+
   .blog-core__article {
     display: flex;
     justify-content: center;
@@ -114,6 +158,25 @@ export default defineComponent({
 
   .blog-core__frontmatter-cover {
     max-width: 100%;
+  }
+
+  .blog-core__frontmatter-title {
+    display: block;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-decoration: none;
+    color: #403e3e;
+    text-align: center;
+
+    &::after {
+      border-bottom: 2px dashed #cce5ff;
+      content: "";
+      width: 100px;
+      display: block;
+      margin: 0.2em auto 0;
+      height: 2px;
+    }
   }
 
   .blog-core__mask {

@@ -5,6 +5,7 @@ orbment_color: "green"
 
 # 以上配置请不要随意修改，否则可能会出现问题。可以修改下面的配置。
 
+# 导航设置
 navigator:
   首页: /
   归档: /category
@@ -14,20 +15,31 @@ settings:
   avatar_image: /favicon.png
   # 博客名称
   blog_name: "我的博客"
-  blog_description: "一个简单的Vine blog" # 博客简介
-  banner_motto: "凛冬散尽，星河长明" # banner图上的一句话格言，也可以写其他你喜欢的内容，字数不要太多，否则可能会折行
-  owner: "Shawn Zhou" # 博客拥有者
-  site_start_time: 2021 # 网站起始时间，如果此年份和当前年份一致，则不显示为区间样式
-  banner_pic: "/twilight_banner.jpg" # 手动修改banner图，但不太建议新手同学这么做
-  page_step: 10 # 博文分页，每页的文章数量
-  beian: # 网站备案信息，网站部署到中国大陆服务器的同学必填，记得把enable设置为true
-    enable: true
-    icp: # ICP备案号
+  # 博客简介
+  blog_description: "一个简单的Vine blog" 
+  # banner图上的一句话格言，也可以写其他你喜欢的内容，字数不要太多，否则可能会折行
+  banner_motto: "凛冬散尽，星河长明" 
+  # 博客拥有者
+  owner: "Shawn Zhou" 
+  # 网站起始时间，如果此年份和当前年份一致，则不显示为区间样式
+  site_start_time: 2021 
+  # 手动修改banner图，但不太建议新手同学这么做。文件请放在public文件夹下
+  banner_pic: "/twilight_banner.jpg" 
+  # 博文分页，每页的文章数量
+  page_step: 10 
+  # 网站备案信息，网站部署到中国大陆服务器的同学必填，记得把enable设置为true
+  beian: 
+    # 设置是否启用备案信息，true显示，false不显示
+    enable: false
+    # ICP备案号
+    icp: 
       url: "http://www.beian.miit.gov.cn/"
-      text: "鲁ICP备12341234"
-    police: # 公安备案信息
+      text: "鲁ICP备114514"
+    # 公安备案信息
+    police: 
       url: "http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=01234567890123"
       text: "鲁公网安备01234567890123号"
+  # 侧边栏个人链接
   icon_link:
   - icon: "/github.svg"
     link: "https://github.com/ShawnZhou2000"

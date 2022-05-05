@@ -4,6 +4,25 @@
   </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue';
+import {
+  getCoreConfig
+} from './api/blogSettings';
+
+export default defineComponent({
+  setup() {
+    if (typeof document !== 'undefined') {
+      getCoreConfig()
+      .then(res => {
+        document.title = res.settings.blog_name;
+      })
+    }
+  },
+})
+</script>
+
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
