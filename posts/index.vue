@@ -1,6 +1,5 @@
 <template>
-  <div>1</div>
-  <!-- <layout :render="'index'"></layout> -->
+  <layout :render="'index'"></layout>
 </template>
 
 <script lang="ts">

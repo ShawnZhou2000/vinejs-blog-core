@@ -7,16 +7,18 @@ import {
   getCoreConfig
 } from './api/blogSettings'
 
-
 export const createApp = ViteSSG(
   App, 
   { routes },
-  ({ app, router }) => {
+  ({ app, router, routes, isClient, initialState }) => {
     getCoreConfig()
     .then(res => {
-      router.beforeEach((to, from, next) => {
-        next();
-      })
+      initialState.data = res;
+      for (let i = 0; i < routes.length; i++) {
+        if (routes[i].meta) {
+          routes[i].meta.conf = initialState.data;
+        }
+      }
     })
   }
 );

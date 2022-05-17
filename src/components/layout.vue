@@ -100,6 +100,7 @@ export default defineComponent({
     bloglistVue,
   },
   setup(props, ctx) {
+    console.log(routes);
     const renderMode: Ref<string> = toRef(props, "render");
     let isSideBarActiveInMob: Ref<boolean> = ref(false);
     const matchReg = /articles\//;

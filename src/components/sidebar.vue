@@ -31,7 +31,6 @@ export default defineComponent({
     footerVue
   },
   setup() {
-    
     let config:any = reactive({data: {}});
     
     return {
