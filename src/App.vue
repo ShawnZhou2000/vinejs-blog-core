@@ -9,13 +9,7 @@ import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   setup() {
-    if (typeof document !== 'undefined') {
-      let config:any = reactive({data: {}});
-      if (!import.meta.env.SSR) {
-        config.data = JSON.parse(window.localStorage.getItem('data'));
-      }
-      document.title = config.data.settings.blog_name;
-    }
+  
   },
 })
 </script>

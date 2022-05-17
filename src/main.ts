@@ -15,9 +15,6 @@ export const createApp = ViteSSG(
     getCoreConfig()
     .then(res => {
       router.beforeEach((to, from, next) => {
-        if (!import.meta.env.SSR) {
-          window.localStorage.setItem('data', JSON.stringify(res));
-        }
         next();
       })
     })

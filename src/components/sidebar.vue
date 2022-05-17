@@ -33,9 +33,7 @@ export default defineComponent({
   setup() {
     
     let config:any = reactive({data: {}});
-    if (!import.meta.env.SSR) {
-      config.data = JSON.parse(window.localStorage.getItem('data'));
-    }
+    
     return {
       config,
     }
