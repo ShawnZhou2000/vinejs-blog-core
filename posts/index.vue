@@ -1,5 +1,5 @@
 <template>
-  <layout :render="'index'" :conf="conf"></layout>
+  <layout :render="'index'"></layout>
 </template>
 
 <script lang="ts">

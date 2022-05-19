@@ -1,15 +1,15 @@
 <template>
   <div class="blog-core__bg" 
-    :style="config.data.settings.banner_pic !== null ? `background: url('${config.data.settings.banner_pic}'); background-size: cover;` : ''">
+    :style="config.banner_pic !== null ? `background: url('${config.banner_pic}'); background-size: cover;` : ''">
     <div class="blog-core__motto">
-      {{ config.data.settings.banner_motto }}
+      {{ config.banner_motto }}
     </div>
     <i class="blog-core__arrow-down" id="arrow"></i>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, Ref, nextTick, reactive, onUnmounted } from 'vue';
+import { defineComponent, onMounted, ref, Ref, nextTick, toRef } from 'vue';
 function throttle(fn: Function, delay: number) {
   let timer: number | null = null;
   return function() {
@@ -24,11 +24,9 @@ function throttle(fn: Function, delay: number) {
 }
 
 export default defineComponent({
-  setup() {
-    let config:any = reactive({data: {}});
-    if (!import.meta.env.SSR) {
-      config.data = JSON.parse(window.localStorage.getItem('data'));
-    }
+  props: ["bannerConf"],
+  setup(props) {
+    const config: Ref<any> = toRef(props, "bannerConf");
     let isArrowActive: Ref<boolean> = ref(true);
     onMounted(():void => {
       window.addEventListener('scroll', throttle((e: any) => {

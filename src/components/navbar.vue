@@ -4,7 +4,7 @@
       <li class="blog-core__mob-toggle" @click="showSideBar">
         <div class="blog-core__mob-toggle-btn"></div>
       </li>
-      <li v-for="navItem in config.data" :key="navItem.id">
+      <li v-for="navItem in navList" :key="navItem.id">
         <router-link :to="navItem.nav" :class="{ active: activePage===navItem.id }" class="blog-core__list-item">
           {{ navItem.name }}
         </router-link>
@@ -14,22 +14,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, reactive } from 'vue';
+import { defineComponent, Ref, ref, toRef } from 'vue';
+
+type nav = {
+  name: string,
+  nav: string,
+  id: number
+}
 
 export default defineComponent({
+  props: ["navConf"],
   setup(props, ctx) {
-    let config:any = reactive({data: []});
-    let res:any = reactive({data: {}});
-    if (!import.meta.env.SSR) {
-      res.data = JSON.parse(window.localStorage.getItem('data'));
-    }
-
-    Object.keys(res.data.navigator).forEach((item, index) => {
-      config.data.push({
+    const config: Ref<any> = toRef(props, "navConf");
+    let navList: Array<nav> = [];
+    Object.keys(config.value).forEach((item, index) => {
+      navList.push({
         name: item,
-        nav: res.data.navigator[item],
+        nav: config.value[item],
         id: index
-      });
+      })
     });
     let activePage: Ref<number> = ref(0);
     let isSideBarActiveInMob: Ref<boolean> = ref(true);
@@ -40,6 +43,7 @@ export default defineComponent({
     }
 
     return {
+      navList,
       config,
       activePage,
       showSideBar,

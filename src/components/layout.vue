@@ -10,10 +10,10 @@
       <sidebar-vue :sidebarConf="sidebarConf"></sidebar-vue>
     </div>
     <div class="blog-core__main" ref="main">
-      <navbar-vue @sideBarChangeInMob="handleSideBarChangeInMob"></navbar-vue>
+      <navbar-vue @sideBarChangeInMob="handleSideBarChangeInMob" :navConf="navConf"></navbar-vue>
       <template v-if="renderMode === 'index'">
         <banner-vue :bannerConf="bannerConf"></banner-vue>
-        <bloglist-vue :blogListConf="blogListConf"></bloglist-vue>
+        <bloglist-vue></bloglist-vue>
       </template>
       <template v-if="renderMode === 'article'">
         <div class="blog-core__article-box">
@@ -92,7 +92,7 @@ type blogItem = {
 };
 
 export default defineComponent({
-  props: ["render", "conf"],
+  props: ["render"],
   components: {
     bannerVue,
     sidebarVue,
@@ -100,24 +100,23 @@ export default defineComponent({
     bloglistVue,
   },
   setup(props, ctx) {
-    const conf: Ref<any> = toRef(props, "conf");
-    console.log(conf.value);
+    const conf: any = routes[0].meta.conf;
     const sidebarConf = reactive({
-      avatar_image: conf.value.settings.avatar_image,
-      blog_name: conf.value.settings.blog_name,
-      blog_description: conf.value.settings.blog_description,
-      icon_link: conf.value.settings.icon_link,
-      owner: conf.value.settings.owner,
-      site_start_time: conf.value.settings.site_start_time,
-      beian: conf.value.settings.beian,
-      theme: conf.value.settings.theme,
+      avatar_image: conf.settings.avatar_image,
+      blog_name: conf.settings.blog_name,
+      blog_description: conf.settings.blog_description,
+      icon_link: conf.settings.icon_link,
+      owner: conf.settings.owner,
+      site_start_time: conf.settings.site_start_time,
+      beian: conf.settings.beian,
+      theme: conf.settings.theme,
     });
     const bannerConf = reactive({
-      
+      banner_pic: conf.settings.banner_pic,
+      banner_motto: conf.settings.banner_motto,
     });
-    const blogListConf = reactive({
-      
-    });
+    const navConf = reactive(conf.navigator);
+
     const renderMode: Ref<string> = toRef(props, "render");
     
     let isSideBarActiveInMob: Ref<boolean> = ref(false);
@@ -203,7 +202,7 @@ export default defineComponent({
       isSideBarActiveInMob.value = val;
     };
     const handleMaskClose = () => {
-      handleSideBarChangeInMob(!isSideBarActiveInMob.value);
+      handleSideBarChangeInMob(!isSideBarActiveInMob);
     };
 
     return {
@@ -216,7 +215,7 @@ export default defineComponent({
       conf,
       sidebarConf,
       bannerConf,
-      blogListConf
+      navConf
     };
   },
 });
