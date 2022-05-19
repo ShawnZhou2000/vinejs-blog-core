@@ -5,7 +5,7 @@
         <div class="blog-core__mob-toggle-btn"></div>
       </li>
       <li v-for="navItem in navList" :key="navItem.id">
-        <router-link :to="navItem.nav" :class="{ active: activePage===navItem.id }" class="blog-core__list-item">
+        <router-link :to="navItem.nav" @click="changeActive(navItem.id)" :class="{ active: activePage===navItem.id }" class="blog-core__list-item">
           {{ navItem.name }}
         </router-link>
       </li>
@@ -36,6 +36,9 @@ export default defineComponent({
     });
     let activePage: Ref<number> = ref(0);
     let isSideBarActiveInMob: Ref<boolean> = ref(true);
+    const changeActive = (id: number) => {
+      activePage.value = id;
+    }
 
     const showSideBar = ():void => {
       isSideBarActiveInMob.value = !isSideBarActiveInMob.value;
@@ -48,6 +51,7 @@ export default defineComponent({
       activePage,
       showSideBar,
       isSideBarActiveInMob,
+      changeActive,
     }
   },
 })

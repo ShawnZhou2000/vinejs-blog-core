@@ -44,7 +44,11 @@
           </div>
         </div>
       </template>
-      <template v-if="renderMode === 'category'"> </template>
+      <template v-if="renderMode === 'category'">
+        <div class="blog-core__category-box">
+          12312
+        </div>
+      </template>
       <template v-if="renderMode === 'about'">
         <div class="blog-core__article-box">
           <div class="blog-core__frontmatter">
