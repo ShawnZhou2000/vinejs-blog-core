@@ -45,9 +45,7 @@
         </div>
       </template>
       <template v-if="renderMode === 'category'">
-        <div class="blog-core__category-box">
-          12312
-        </div>
+        <category-vue></category-vue>
       </template>
       <template v-if="renderMode === 'about'">
         <div class="blog-core__article-box">
@@ -85,6 +83,7 @@ import bannerVue from "./banner.vue";
 import sidebarVue from "./sidebar.vue";
 import navbarVue from "./navbar.vue";
 import bloglistVue from "./bloglist.vue";
+import categoryVue from "./category.vue";
 
 type blogItem = {
   title: string;
@@ -102,7 +101,8 @@ export default defineComponent({
     sidebarVue,
     navbarVue,
     bloglistVue,
-  },
+    categoryVue
+},
   setup(props, ctx) {
     const conf: any = routes[0].meta.conf;
     const sidebarConf = reactive({
@@ -120,7 +120,6 @@ export default defineComponent({
       banner_motto: conf.settings.banner_motto,
     });
     const navConf = reactive(conf.navigator);
-
     const renderMode: Ref<string> = toRef(props, "render");
     
     let isSideBarActiveInMob: Ref<boolean> = ref(false);
