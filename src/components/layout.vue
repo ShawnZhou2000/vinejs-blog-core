@@ -7,13 +7,13 @@
       :class="{ active: isSideBarActiveInMob }"
     ></div>
     <div class="blog-core__side" :class="{ active: isSideBarActiveInMob }">
-      <sidebar-vue></sidebar-vue>
+      <sidebar-vue :sidebarConf="sidebarConf"></sidebar-vue>
     </div>
     <div class="blog-core__main" ref="main">
       <navbar-vue @sideBarChangeInMob="handleSideBarChangeInMob"></navbar-vue>
       <template v-if="renderMode === 'index'">
-        <banner-vue></banner-vue>
-        <bloglist-vue></bloglist-vue>
+        <banner-vue :bannerConf="bannerConf"></banner-vue>
+        <bloglist-vue :blogListConf="blogListConf"></bloglist-vue>
       </template>
       <template v-if="renderMode === 'article'">
         <div class="blog-core__article-box">
@@ -73,7 +73,7 @@ import {
   Ref,
   ref,
   onMounted,
-  getCurrentInstance,
+  reactive,
 } from "vue";
 import routes from "pages-generated";
 import dayjs from "dayjs";
@@ -92,7 +92,7 @@ type blogItem = {
 };
 
 export default defineComponent({
-  props: ["render"],
+  props: ["render", "conf"],
   components: {
     bannerVue,
     sidebarVue,
@@ -100,8 +100,26 @@ export default defineComponent({
     bloglistVue,
   },
   setup(props, ctx) {
-    console.log(routes);
+    const conf: Ref<any> = toRef(props, "conf");
+    console.log(conf.value);
+    const sidebarConf = reactive({
+      avatar_image: conf.value.settings.avatar_image,
+      blog_name: conf.value.settings.blog_name,
+      blog_description: conf.value.settings.blog_description,
+      icon_link: conf.value.settings.icon_link,
+      owner: conf.value.settings.owner,
+      site_start_time: conf.value.settings.site_start_time,
+      beian: conf.value.settings.beian,
+      theme: conf.value.settings.theme,
+    });
+    const bannerConf = reactive({
+      
+    });
+    const blogListConf = reactive({
+      
+    });
     const renderMode: Ref<string> = toRef(props, "render");
+    
     let isSideBarActiveInMob: Ref<boolean> = ref(false);
     const matchReg = /articles\//;
     let blogPage: blogItem = {
@@ -195,6 +213,10 @@ export default defineComponent({
       frontmatter: blogPage,
       renderMode,
       aboutPage,
+      conf,
+      sidebarConf,
+      bannerConf,
+      blogListConf
     };
   },
 });

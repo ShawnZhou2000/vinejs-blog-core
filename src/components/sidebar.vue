@@ -2,11 +2,11 @@
   <div class="blog-core__side-container">
     <div class="blog-core__side-main">
       <div class="blog-core__center">
-        <img :src="config.data.settings.avatar_image" alt="avatar"/>
-        <h1>{{ config.data.settings.blog_name }}</h1>
-        <p>{{ config.data.settings.blog_description }}</p>
+        <img :src="config.avatar_image" alt="avatar"/>
+        <h1>{{ config.blog_name }}</h1>
+        <p>{{ config.blog_description }}</p>
         <div class="blog-core__iconlist">
-          <div class="blog-core__icons" v-for="(item, index) in config.data.settings.icon_link" :key="index">
+          <div class="blog-core__icons" v-for="(item, index) in config.icon_link" :key="index">
             <a :href="item.link" target="_blank">
               <img :src="item.icon" />
             </a>
@@ -15,24 +15,24 @@
       </div>
     </div>
     <footer-vue 
-      :owner="config.data.settings.owner"
-      :start="config.data.settings.site_start_time"
-      :beian="config.data.settings.beian" 
-      :theme="config.data.settings.theme"></footer-vue>
+      :owner="config.owner"
+      :start="config.site_start_time"
+      :beian="config.beian" 
+      :theme="config.theme"></footer-vue>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, Ref, toRef } from 'vue';
 import footerVue from '../components/footer.vue';
 
 export default defineComponent({
   components: {
     footerVue
   },
-  setup() {
-    let config:any = reactive({data: {}});
-    
+  props: ["sidebarConf"],
+  setup(props) {
+    const config: Ref<any> = toRef(props, "sidebarConf");
     return {
       config,
     }
