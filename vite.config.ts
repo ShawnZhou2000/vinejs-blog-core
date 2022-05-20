@@ -7,6 +7,11 @@ import ViteVue from "@vitejs/plugin-vue";
 import ViteMarkdown from "vite-plugin-md";
 import Components from 'unplugin-vue-components/vite';
 
+// DEBUG mode
+process.env.VINE_CORE = "DEBUG" 
+
+// process.env.VINE_CORE = "PRODUCTION" 
+
 // plugins settings
 export default defineConfig({
   build: {
@@ -30,7 +35,7 @@ export default defineConfig({
     }),
     VitePages({
       extensions: ["vue", "md"],
-      pagesDir: "posts",
+      pagesDir: process.env.VINE_CORE === "DEBUG" ? "posts" : ".vite_cache/posts",
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1));
         if (path.includes(".md")) {

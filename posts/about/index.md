@@ -2,8 +2,6 @@
 title: 关于博主
 time: 2022-04-24
 ---
-<layout :render="'about'" />
-<article>
 
 > 这世界上只有一种真正的英雄主义，就是在看清生活的真相之后，依然热爱生活。
 
@@ -58,5 +56,3 @@ B站：[0饭盒君](https://space.bilibili.com/396160)
 网易云音乐：1饭盒君
 
 邮箱：[shawnzhou101@163.com](mailto:shawnzhou101@163.com)
-
-</article>
