@@ -35,7 +35,7 @@ export default defineConfig({
     }),
     VitePages({
       extensions: ["vue", "md"],
-      pagesDir: process.env.VINE_CORE === "DEBUG" ? "posts" : ".vite_cache/posts",
+      dirs: process.env.VINE_CORE === "PRODUCTION" ? "posts" : "../.vine_cache/posts",
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1));
         if (path.includes(".md")) {

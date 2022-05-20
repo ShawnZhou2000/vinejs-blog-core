@@ -15,7 +15,7 @@
         <banner-vue :bannerConf="bannerConf"></banner-vue>
         <bloglist-vue></bloglist-vue>
       </template>
-      <template v-if="renderMode === 'article'">
+      <template v-if="renderMode === 'articles'">
         <div class="blog-core__article-box">
           <div class="blog-core__frontmatter">
             <h1 class="blog-core__frontmatter-title">
