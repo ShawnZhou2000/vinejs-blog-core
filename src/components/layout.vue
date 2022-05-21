@@ -166,7 +166,7 @@ export default defineComponent({
       });
     }
 
-    if (renderMode.value === "article") {
+    if (renderMode.value === "articles") {
       blogPage = routes
         .filter((item) => {
           if (typeof window !== "undefined") {
