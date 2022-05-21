@@ -1,8 +1,9 @@
 import VitePages from "vite-plugin-pages";
 import { resolve } from "path";
+import type { UserConfig } from 'vite';
+import {} from 'vite-ssg';
 import fs from "fs-extra";
 import matter from "gray-matter";
-import { defineConfig } from "vite";
 import ViteVue from "@vitejs/plugin-vue";
 import ViteMarkdown from "vite-plugin-md";
 import Components from 'unplugin-vue-components/vite';
@@ -13,7 +14,7 @@ process.env.VINE_CORE = "DEBUG"
 // process.env.VINE_CORE = "PRODUCTION" 
 
 // plugins settings
-export default defineConfig({
+const config: UserConfig = {
   build: {
     outDir: "../dist",
   },
@@ -35,7 +36,7 @@ export default defineConfig({
     }),
     VitePages({
       extensions: ["vue", "md"],
-      dirs: process.env.VINE_CORE === "PRODUCTION" ? "posts" : "../.vine_cache/posts",
+      dirs: process.env.VINE_CORE === "PRODUCTION" ? "posts" : "core/cache_posts",
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1));
         if (path.includes(".md")) {
@@ -52,4 +53,6 @@ export default defineConfig({
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
     }),
   ],
-});
+};
+
+export default config;
