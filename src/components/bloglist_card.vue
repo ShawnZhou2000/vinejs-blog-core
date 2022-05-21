@@ -45,7 +45,7 @@ export default defineComponent({
   }
 
   .blog-core__card-cover {
-    max-width: $article-area-width;
+    max-width: calc($article-area-width - 40px);
   }
 
   .blog-core__router-link {
